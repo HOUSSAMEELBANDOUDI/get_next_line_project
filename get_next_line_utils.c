@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-char	*ft_strdup(char *str)
+char	*ft_strdup(char const *str)
 {
 	int		i;
 	char	*dup;

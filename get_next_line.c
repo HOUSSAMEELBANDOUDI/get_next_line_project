@@ -29,38 +29,45 @@ char	*ft_add(char **str, int i)
 	return (new);
 }
 
+char	*ft_get_line(char **str, char **dst, char *buffer, int fd)
+{
+	int	byt_read;
+	int	nl;
+
+	byt_read = read(fd, buffer, BUFFER_SIZE);
+	while (byt_read >= 0)
+	{
+		buffer[byt_read] = '\0';
+		*str = ft_strjoin(*str, buffer);
+		nl = ft_index(*str);
+		if (nl != -1)
+			return (ft_result(str, dst, nl));
+		if (!byt_read && !*str[0])
+			break ;
+		if (!byt_read)
+			return (ft_add(str, 0));
+		byt_read = read(fd, buffer, BUFFER_SIZE);
+	}
+	free(*str);
+	*str = NULL;
+	return (NULL);
+}
+
 char	*get_next_line(int fd)
 {
 	char		buffer[BUFFER_SIZE + 1];
 	static char	*str;
 	char		*dst;
-	int			nl;
-	int			byt_read;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	byt_read = read(fd, buffer, BUFFER_SIZE);
 	if (!str)
 		str = ft_strdup("");
 	if (!str)
 		return (NULL);
-	while (byt_read >= 0)
-	{
-		buffer[byt_read] = '\0';
-		str = ft_strjoin(str, buffer);
-		nl = ft_index(str);
-		if (nl != -1)
-			return (ft_result(&str, &dst, nl));
-		if (!byt_read && !str[0])
-			break ;
-		if (!byt_read)
-			return (ft_add(&str, 0));
-		byt_read = read(fd, buffer, BUFFER_SIZE);
-	}
-	free(str);
-	str = NULL;
-	return (NULL);
+	return (ft_get_line(&str, &dst, buffer, fd));
 }
+
 int	ft_index(char *s)
 {
 	int	i;
@@ -74,17 +81,3 @@ int	ft_index(char *s)
 	}
 	return (-1);
 }
-
-/*int	main(void)
-{
-	int fd = open("test.txt", O_RDONLY | O_CREAT);
-	char *s = get_next_line(fd);
-	while (s)
-	{
-		printf("%s", s);
-		free(s);
-		s = get_next_line(fd);
-	}
-	printf("%s", s);
-
-	// while(1);*/

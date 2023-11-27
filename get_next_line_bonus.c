@@ -29,12 +29,6 @@ char	*ft_add(char **str, int i)
 	return (new);
 }
 
-void	ft_free(char **str)
-{
-	free(*str);
-	*str = NULL;
-}
-
 char	*get_next_line(int fd)
 {
 	char		buffer[BUFFER_SIZE + 1];
