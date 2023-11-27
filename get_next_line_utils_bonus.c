@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hel-band <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/21 10:02:12 by hel-band          #+#    #+#             */
-/*   Updated: 2023/11/21 10:57:43 by hel-band         ###   ########.fr       */
+/*   Created: 2023/11/23 15:54:25 by hel-band          #+#    #+#             */
+/*   Updated: 2023/11/23 15:57:01 by hel-band         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
-char	*ft_strdup(char *str)
+char	*ft_strdup(const char *str)
 {
 	int		i;
 	char	*dup;
@@ -52,7 +52,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (dst);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char const *s2)
 {
 	char	*dst;
 	size_t	i;
@@ -77,7 +77,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	dst[i] = '\0';
-	free((char *)s1);
+	free (s1);
+	s1 = NULL;
 	return (dst);
 }
 
@@ -107,3 +108,4 @@ void	*ft_calloc(size_t count, size_t size)
 	}
 	return (s);
 }
+
