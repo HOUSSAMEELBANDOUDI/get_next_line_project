@@ -77,8 +77,7 @@ char	*ft_strjoin(char *s1, char const *s2)
 		j++;
 	}
 	dst[i] = '\0';
-	free (s1);
-	s1 = NULL;
+	free((char *)s1);
 	return (dst);
 }
 
@@ -108,4 +107,3 @@ void	*ft_calloc(size_t count, size_t size)
 	}
 	return (s);
 }
-
