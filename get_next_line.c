@@ -59,7 +59,7 @@ char	*get_next_line(int fd)
 	static char	*str;
 	char		*dst;
 
-	if (fd < 0 || (BUFFER_SIZE >= INT_MAX) || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
@@ -68,10 +68,10 @@ char	*get_next_line(int fd)
 		str = ft_strdup("");
 	if (!str)
 		return (NULL);
-	char *rs = ft_get_line(&str, &dst, &buffer, fd);
+	dst = ft_get_line(&str, &dst, &buffer, fd);
 	free(buffer);
 	buffer = NULL;
-	return (rs);
+	return (dst);
 }
 
 int	ft_index(char *s)
