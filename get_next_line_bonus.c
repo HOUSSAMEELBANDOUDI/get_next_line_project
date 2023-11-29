@@ -29,16 +29,16 @@ char	*ft_add(char **str, int i)
 	return (new);
 }
 
-char	*ft_get_line(char **str, char **dst, char *buffer, int fd)
+char	*ft_get_line(char **str, char **dst, char **buffer, int fd)
 {
 	int	byt_read;
 	int	nl;
 
-	byt_read = read(fd, buffer, BUFFER_SIZE);
+	byt_read = read(fd, *buffer, BUFFER_SIZE);
 	while (byt_read >= 0)
 	{
-		buffer[byt_read] = '\0';
-		str[fd] = ft_strjoin(str[fd], buffer);
+		(*buffer)[byt_read] = '\0';
+		str[fd] = ft_strjoin(str[fd], *buffer);
 		nl = ft_index(str[fd]);
 		if (nl != -1)
 			return (ft_result(&str[fd], dst, nl));
@@ -46,7 +46,7 @@ char	*ft_get_line(char **str, char **dst, char *buffer, int fd)
 			break ;
 		if (!byt_read)
 			return (ft_add(&str[fd], 0));
-		byt_read = read(fd, buffer, BUFFER_SIZE);
+		byt_read = read(fd, *buffer, BUFFER_SIZE);
 	}
 	free(str[fd]);
 	str[fd] = NULL;
@@ -55,17 +55,23 @@ char	*ft_get_line(char **str, char **dst, char *buffer, int fd)
 
 char	*get_next_line(int fd)
 {
-	char		buffer[BUFFER_SIZE + 1];
-	static char	*str[1024];
+	char		*buffer;
+	static char	*str[OPEN_MAX];
 	char		*dst;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || (BUFFER_SIZE >= INT_MAX) || BUFFER_SIZE <= 0)
+		return (NULL);
+	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buffer)
 		return (NULL);
 	if (!str[fd])
 		str[fd] = ft_strdup("");
 	if (!str[fd])
 		return (NULL);
-	return (ft_get_line(str, &dst, buffer, fd));
+	dst = ft_get_line(str, &dst, &buffer, fd);
+	free(buffer);
+	buffer = NULL;
+	return (dst);
 }
 
 int	ft_index(char *s)

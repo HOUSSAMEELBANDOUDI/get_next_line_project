@@ -17,6 +17,7 @@
 #  define BUFFER_SIZE 10
 # endif
 
+# include <limits.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -28,9 +29,9 @@ void	*ft_calloc(size_t count, size_t size);
 int		ft_index(char *s);
 int		ft_strlen(const char *s);
 char	*ft_strjoin(char *s1, char const *s2);
-char	*ft_strdup(const char *s1);
+char	*ft_strdup(char *s1);
 char	*ft_add(char **str, int i);
 char	*ft_result(char **str, char **dst, int i);
-char	*ft_get_line(char **str, char **dst, char *buffer, int fd);
+char	*ft_get_line(char **str, char **dst, char **buffer, int fd);
 
 #endif
