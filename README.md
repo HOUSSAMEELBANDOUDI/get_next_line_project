@@ -41,3 +41,21 @@ To use the function in your code, simply include its header:
 
 ```
 #include "get_next_line.h"
+and, when compiling your code, add the source files and the required flag:
+
+get_next_line.c get_next_line_utils.c -D BUFFER_SIZE=<size>
+If you're on Linux, you may as well need the following flags:
+
+-D ARG_MAX="sysconf(_SC_ARG_MAX)" -D OPEN_MAX=1024
+#### Third-party testers
+gnlTester
+mrjvs/42cursus_gnl_tests
+Hellio404/Get_Next_Line_Tester
+saarikoski-jules/gnl_unit_tests
+charMstr/GNL_lover
+Mazoise/42TESTERS-GNL
+#### Notes
+static keyword
+Making a global variable/function static: only visible within its own translation unit.
+static (local variable): presistent across function calls and only visible within its function.
+note: you cant use the same name for static variable and global static variable! but never do it
