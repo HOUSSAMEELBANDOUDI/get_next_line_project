@@ -1,44 +1,46 @@
-# 42cursus' get_next_line
+# get_next_line — 42 Project
 
-Development repository for the 42cursus' get_next_line project.
+A function that reads a file **line by line** from a file descriptor. Built as part of the 42 school curriculum, this project teaches static variables and efficient file reading with a configurable buffer size.
 
-For more information about 42cursus and its projects, please refer to the [42cursus repository](https://github.com/42cursus).
+## Function Prototype
 
-## About
-The aim of this project is to code a function that returns a line ending with a newline, read from a file descriptor.
-
-### TLDR
-This project involves coding a function that returns one line at a time from a text file.
-
-## Index
-- [get_next_line](#get_next_line): source code developed for the project.
-
-## get_next_line
-
-### Functions
-- **ft_result**: Gets the line before the newline.
-- **ft_get_line**: Returns the index of the newline if found else returns -1.
-- **ft_add**: reinitialize the static variable.
-- **get_next_line**: Main function.
-
-## get_next_line_utils
-
-### Functions
-- **ft_strdup**: Save a copy of a string (with malloc).
-- **ft_calloc**: Allocates X size of memory and set it to 0.
-- **ft_strlen**: Find the length of a string.
-- **ft_strjoin**: Joins 2 strings together.
+```c
+char *get_next_line(int fd);
+```
 
 ## Usage
 
-### Requirements
-The function is written in the C language and thus needs the gcc compiler and some standard C libraries to run.
-
-### Instructions
-
-#### 1. Using it in your code
-To use the function in your code, simply include its header:
-
-```
+```c
 #include "get_next_line.h"
 
+int fd = open("file.txt", O_RDONLY);
+char *line;
+
+while ((line = get_next_line(fd)) != NULL)
+{
+    printf("%s", line);
+    free(line);
+}
+close(fd);
+```
+
+## Bonus Features
+
+- Handle multiple file descriptors simultaneously
+- Only one static variable used
+
+## Compile with custom buffer size
+
+```bash
+cc -Wall -Wextra -Werror -D BUFFER_SIZE=42 get_next_line.c get_next_line_utils.c
+```
+
+## Tech Stack
+
+- **C**
+- **Static variables**
+- **File I/O** (read, open, close)
+
+## Author
+
+**Houssame El Bandoudi** — [GitHub](https://github.com/HOUSSAMEELBANDOUDI) | 42 Student (hel-band)
